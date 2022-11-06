@@ -1,18 +1,23 @@
 package Models;
 
+import Utility.ConstantData;
+import Utility.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public abstract class BaseModel {
 
     protected WebDriver webDriver;
     protected WebDriverWait wait;
-    protected String USERNAME = System.getProperty("jiraUser");
-    protected String PASSWORD = System.getProperty("jiraPass");
+    protected String USERNAME = ConstantData.jiraUser;
+    protected String PASSWORD = ConstantData.jiraPass;
 
     @FindBy(id = "login-form-username")
     WebElement usernameField;
@@ -27,6 +32,14 @@ public abstract class BaseModel {
     WebElement profilePicture;
 
 
+    public BaseModel(){
+        WebDriverManager webDriverManager = new WebDriverManager();
+        this.webDriver = webDriverManager.getWebDriver();
+        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(15));
+        PageFactory.initElements(webDriver, this);
+    }
+
+
     public String getUSERNAME() {
         return USERNAME;
     }
@@ -38,7 +51,7 @@ public abstract class BaseModel {
 
 
 
-    protected void login(){
+    protected void baseLogin(){
         waitForUsernameFieldToBeClickable();
         setUsername(USERNAME);
         setPassword(PASSWORD);
