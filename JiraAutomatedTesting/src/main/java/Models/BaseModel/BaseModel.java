@@ -76,11 +76,30 @@ public abstract class BaseModel {
 
 
     protected void waitForUsernameFieldToBeClickable(){
-        usernameField = wait.until(ExpectedConditions.elementToBeClickable(By.id("login-form-username")));
+//        usernameField = wait.until(ExpectedConditions.elementToBeClickable(By.id("login-form-username")));
+        usernameField = waitUntilElementIsClickable("id", "login-form-username");
     }
 
 
     private void waitForProfilePictureToBeClickable(){
-        profilePicture = wait.until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
+//        profilePicture = wait.until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
+        profilePicture = waitUntilElementIsClickable("id", "header-details-user-fullname");
+    }
+
+
+    public WebElement waitUntilElementIsClickable(String searchType, String searchElementBy) {
+        WebElement result = null;
+        switch (searchType) {
+            case "id":
+                result = wait.until(ExpectedConditions.elementToBeClickable(By.id(searchElementBy)));
+                break;
+            case "xpath":
+                result = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(searchElementBy)));
+                break;
+            case "cssSelector":
+                result = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(searchElementBy)));
+                break;
+        }
+        return result;
     }
 }

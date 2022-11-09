@@ -1,11 +1,8 @@
 package Models;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.UUID;
 
 public class CreateIssueWindowModel extends BaseModel {
@@ -46,7 +43,13 @@ public class CreateIssueWindowModel extends BaseModel {
 
 
     public void waitForProjectFieldToBeClickable(){
-        projectField = wait.until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
+//        projectField = wait.until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
+        projectField = waitUntilElementIsClickable("id", "project-field");
+    }
+
+
+    public void waitForIssueTypeFieldToBeClickable(){
+        issueTypeField = waitUntilElementIsClickable("xpath", "//input[@id=\"issuetype-field\"]");
     }
 
 
@@ -82,5 +85,10 @@ public class CreateIssueWindowModel extends BaseModel {
     public String setRandomUuid(){
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
+    }
+
+
+    public void createIssueSUCCESSFUL(){
+
     }
 }
