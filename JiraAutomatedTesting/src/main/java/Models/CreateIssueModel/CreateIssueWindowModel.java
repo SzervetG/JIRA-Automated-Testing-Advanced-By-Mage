@@ -1,16 +1,21 @@
-package Models;
+package Models.CreateIssueModel;
 
-import org.openqa.selenium.WebDriver;
+import Models.BaseModel.BaseModel;
+import Models.HomePageModel;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class CreateIssueWindowModel extends BaseModel {
+    HomePageModel homePage = new HomePageModel();
 
     @FindBy(id = "project-field")
     WebElement projectField;
 
-    @FindBy(xpath = "//input[@id=\"issuetype-field\"]")
+    @FindBy(id = "issuetype-field")
     WebElement issueTypeField;
 
     @FindBy(id = "summary")
@@ -23,12 +28,6 @@ public class CreateIssueWindowModel extends BaseModel {
     WebElement cancelButton;
 
 
-    @FindBy(xpath = "//iframe")
-    WebElement descriptionFrame;
-
-
-    WebDriver driver;
-
     private String randomUuid;
 
 
@@ -37,13 +36,24 @@ public class CreateIssueWindowModel extends BaseModel {
     }
 
 
-    public String getRandomUuid(){
+    public String getIssueUuid(){
         return this.randomUuid;
     }
 
 
+    public String getProjectFieldValue(){
+        projectField = waitUntilElementIsClickable("id", "project-field");
+        return projectField.getAttribute("value");
+    }
+
+
+    public String getIssueTypeFieldValue(){
+        issueTypeField = waitUntilElementIsClickable("id", "issuetype-field");
+        return issueTypeField.getAttribute("value");
+    }
+
+
     public void waitForProjectFieldToBeClickable(){
-//        projectField = wait.until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
         projectField = waitUntilElementIsClickable("id", "project-field");
     }
 
@@ -53,18 +63,69 @@ public class CreateIssueWindowModel extends BaseModel {
     }
 
 
-    public void setProjectField(String projectName){
-        projectField.sendKeys(projectName);
+    public void waitForSummaryFieldToBeClickable(){
+        summaryField = waitUntilElementIsClickable("id", "summary");
     }
 
 
-    public void setIssueTypeField(String issueType){
-        issueTypeField.sendKeys(issueType);
+    public void waitForCreateButtonToBeClickable(){
+        createIssueButton = waitUntilElementIsClickable("id", "create-issue-submit");
+    }
+
+
+    public void overwriteProjectField(String projectName){
+        try {
+            waitForProjectFieldToBeClickable();
+//            clickProjectField();
+//            projectField.sendKeys(projectName);
+            overWriteFieldToSpecifiedValue(projectField, projectName);
+        } catch (ElementNotInteractableException | NoSuchElementException e){
+            waitForProjectFieldToBeClickable();
+            overWriteFieldToSpecifiedValue(projectField, projectName);
+//            projectField.sendKeys(projectName);
+        }
+    }
+
+
+    public void overwriteIssueTypeField(String issueType){
+        try {
+            waitForIssueTypeFieldToBeClickable();
+//            clickIssueTypeField();
+//            issueTypeField.sendKeys(issueType);
+            overWriteFieldToSpecifiedValue(issueTypeField, issueType);
+        } catch (ElementNotInteractableException e){
+            waitForIssueTypeFieldToBeClickable();
+//            issueTypeField.sendKeys(issueType);
+            overWriteFieldToSpecifiedValue(issueTypeField, issueType);
+        }
     }
 
 
     public void setSummaryField(String summary){
-        summaryField.sendKeys(summary);
+        try {
+            waitForSummaryFieldToBeClickable();
+//            clickSummaryField();
+//            summaryField.sendKeys(summary);
+            overWriteFieldToSpecifiedValue(summaryField, summary);
+        } catch (ElementNotInteractableException e){
+            waitForSummaryFieldToBeClickable();
+            overWriteFieldToSpecifiedValue(summaryField, summary);
+//            summaryField.sendKeys(summary);
+        }
+    }
+
+    public void clickProjectField(){
+        projectField.click();
+    }
+
+
+    public void clickIssueTypeField(){
+        issueTypeField.click();
+    }
+
+
+    public void clickSummaryField(){
+        summaryField.click();
     }
 
 
@@ -78,17 +139,31 @@ public class CreateIssueWindowModel extends BaseModel {
     }
 
 
-    public void changeToDescriptionFrame(){
-        driver.switchTo().frame(descriptionFrame);
-    }
-
     public String setRandomUuid(){
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
 
 
-    public void createIssueSUCCESSFUL(){
+    public void createIssueToProject(String projectName, String issueType){
 
+        homePage.clickCreateIssueButton();
+        overwriteProjectField(projectName);
+        overwriteIssueTypeField(issueType);
+        setSummaryField(randomUuid);
+        waitForCreateButtonToBeClickable();
+        clickCreateIssueButton();
+        homePage.waitForConfirmationLinkToBeClickable();
+        homePage.clickConfirmationLink();
     }
+
+
+    public void setIssueParameters(String projectName, String issueType){
+        homePage.clickCreateIssueButton();
+        overwriteProjectField(projectName);
+        overwriteIssueTypeField(issueType);
+        waitForSummaryFieldToBeClickable();
+        clickSummaryField();
+    }
+
 }
