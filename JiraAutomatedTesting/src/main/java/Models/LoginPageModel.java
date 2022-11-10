@@ -1,23 +1,22 @@
 package Models;
 
-import org.openqa.selenium.By;
+import Models.BaseModel.BaseModel;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPageModel extends BaseModel {
 
-    WebDriverWait wait;
 
-    @FindBy(id = "header-details-user-fullname")
-    WebElement profilePicture;
+    @FindBy(className = "captcha-image")
+    WebElement captchaImage;
 
-    @FindBy(id = "view_profile")
-    WebElement profileInfo;
 
-    @FindBy(id = "up-d-username")
-    WebElement usernameInfo;
+    public void waitForCaptchaImageToBeClickable(){
+        captchaImage = waitUntilElementIsClickable("className", "captcha-image");
+    }
 
 
     public void login(){
@@ -25,17 +24,13 @@ public class LoginPageModel extends BaseModel {
     }
 
 
-    public void waitForUsernameToBeClickable(){
-        usernameInfo = wait.until(ExpectedConditions.elementToBeClickable(By.id("up-d-username")));
-    }
-
-    public void setUsername(String username){
-        usernameField.sendKeys(username);
+    public void setUsernameFieldValue(String username){
+        setUsername(username);
     }
 
 
-    public void setPassword(String password){
-        passwordField.sendKeys(password);
+    public void setPasswordFieldValue(String password){
+        setPassword(password);
     }
 
 
@@ -43,24 +38,15 @@ public class LoginPageModel extends BaseModel {
         loginButton.click();
     }
 
-
-    public void clickProfilePicture(){
-        profilePicture.click();
+    public void loginWithWrongCredentialsUntilCaptchaAppears(){
+        int loginLimit = 3;
+        for(int loginTime = 0; loginTime < loginLimit; loginTime++)
+        {
+            setUsernameFieldValue(USERNAME);
+            setPasswordFieldValue("pass");
+            clickLoginButton();
+        }
     }
 
 
-    public void clickProfileInfo(){
-        profileInfo.click();
-    }
-
-
-    public void waitForUsernameInfoToBeClickable(){
-        usernameInfo = wait.until(ExpectedConditions.elementToBeClickable(By.id("up-d-username")));
-    }
-
-
-    public String getUsernameFromProfileSummaryPage(){
-        waitForUsernameInfoToBeClickable();
-        return usernameInfo.getText();
-    }
 }
