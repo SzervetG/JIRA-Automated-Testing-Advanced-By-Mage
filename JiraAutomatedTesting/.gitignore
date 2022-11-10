@@ -1,14 +1,10 @@
-# Package files
 *.jar
 *.rar
 *.zip
-
-# Log file
 *.log
-
-# Sensitive Data
 config.properties
 ConstantData.java
 .idea
 .idea/
 target/
+JiraAutomatedTesting.iml
