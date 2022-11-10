@@ -1,40 +1,48 @@
 package TestSuites;
 
 import Models.*;
+import Models.CreateIssueModel.CreateIssueWindowModel;
 import Utility.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 
 public class CreateIssueTest {
 
     WebDriverManager webDriverManager = new WebDriverManager();
     LoginPageModel loginPage = new LoginPageModel();
-    HomePageModel homePage = new HomePageModel();
     CreateIssueWindowModel createIssueWindow = new CreateIssueWindowModel();
-    CreateIssueDescriptionFrameModel descriptionFrame = new CreateIssueDescriptionFrameModel();
     IssuePageModel issuePage = new IssuePageModel();
-    DeleteIssueWindowModel deleteIssueWindow = new DeleteIssueWindowModel();
 
+
+    @BeforeEach
+    void loginToJira(){
+        loginPage.login();
+    }
 
     @Test
-    public void createIssueSUCCESSFUL(){
-        loginPage.login();
-        homePage.clickCreateIssueButton();
-        createIssueWindow.waitForProjectFieldToBeClickable();
-        createIssueWindow.setProjectField("MTP");
-        createIssueWindow.setIssueTypeField("Task");
-        createIssueWindow.setSummaryField(createIssueWindow.getRandomUuid());
-        createIssueWindow.changeToDescriptionFrame();
-        descriptionFrame.setDescriptionField(createIssueWindow.getRandomUuid());
-        descriptionFrame.changeBackToOriginalFrame();
-        createIssueWindow.clickCreateIssueButton();
-        homePage.waitForConfirmationLinkToBeClickable();
-        homePage.clickConfirmationLink();
-        issuePage.waitForMoreButtonToBeClickable();
-        issuePage.clickMoreButton();
-        issuePage.clickDeleteButton();
-        deleteIssueWindow.waitForConfirmDeleteButtonToBeClickable();
-        deleteIssueWindow.clickDeleteConfirmationButton();
+    void createIssueHappyPath(){
+        createIssueWindow.createIssueToProject("MTP", "Task");
+//        Assertions.assertTrue(createIssueWindow.getIssueUuid() == issuePage.getSummaryValue());
+        Assertions.assertEquals(createIssueWindow.getIssueUuid(), issuePage.getSummaryValue());
+        issuePage.deleteIssue();
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/CreateIssueIssueTypes.csv")
+    void validateIssueParameterPresenceInCreateIssueProcedure(String projectName, String issueType){
+        createIssueWindow.setIssueParameters(projectName, issueType);
+//        Assertions.assertTrue(projectName == createIssueWindow.getProjectFieldValue() && issueType == createIssueWindow.getIssueTypeFieldValue());
+        Assertions.assertEquals(projectName, createIssueWindow.getProjectFieldValue());
+        Assertions.assertEquals(issueType, createIssueWindow.getIssueTypeFieldValue());
+    }
+
+    @AfterEach
+    void quitDriver(){
         webDriverManager.quitDriver();
     }
 
