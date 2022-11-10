@@ -1,10 +1,8 @@
-package Models;
+package Models.BaseModel;
 
 import Utility.ConstantData;
 import Utility.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,16 +18,16 @@ public abstract class BaseModel {
     protected String PASSWORD = ConstantData.jiraPass;
 
     @FindBy(id = "login-form-username")
-    WebElement usernameField;
+    protected WebElement usernameField;
 
     @FindBy(id = "login-form-password")
-    WebElement passwordField;
+    protected WebElement passwordField;
 
     @FindBy(id = "login")
-    WebElement loginButton;
+    protected WebElement loginButton;
 
     @FindBy(id = "header-details-user-fullname")
-    WebElement profilePicture;
+    protected WebElement profilePicture;
 
 
     public BaseModel(){
@@ -61,12 +59,22 @@ public abstract class BaseModel {
 
 
     protected void setUsername(String username){
-        usernameField.sendKeys(username);
+        try{
+            usernameField.sendKeys(username);
+        } catch (StaleElementReferenceException e){
+            waitForUsernameFieldToBeClickable();
+            usernameField.sendKeys(username);
+        }
     }
 
 
     protected void setPassword(String password){
-        passwordField.sendKeys(password);
+        try {
+            passwordField.sendKeys(password);
+        } catch (StaleElementReferenceException e){
+            passwordField = waitUntilElementIsClickable("id", "login-form-password");
+            passwordField.sendKeys(password);
+        }
     }
 
 
@@ -76,30 +84,40 @@ public abstract class BaseModel {
 
 
     protected void waitForUsernameFieldToBeClickable(){
-//        usernameField = wait.until(ExpectedConditions.elementToBeClickable(By.id("login-form-username")));
         usernameField = waitUntilElementIsClickable("id", "login-form-username");
     }
 
 
     private void waitForProfilePictureToBeClickable(){
-//        profilePicture = wait.until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
         profilePicture = waitUntilElementIsClickable("id", "header-details-user-fullname");
     }
 
 
-    public WebElement waitUntilElementIsClickable(String searchType, String searchElementBy) {
+    public WebElement waitUntilElementIsClickable(String searchElementBy, String searchValue) {
         WebElement result = null;
-        switch (searchType) {
+        switch (searchElementBy) {
             case "id":
-                result = wait.until(ExpectedConditions.elementToBeClickable(By.id(searchElementBy)));
+                result = wait.until(ExpectedConditions.elementToBeClickable(By.id(searchValue)));
                 break;
             case "xpath":
-                result = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(searchElementBy)));
+                result = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(searchValue)));
                 break;
             case "cssSelector":
-                result = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(searchElementBy)));
+                result = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(searchValue)));
+                break;
+            case "className":
+                result = wait.until(ExpectedConditions.elementToBeClickable(By.className(searchValue)));
                 break;
         }
         return result;
+    }
+
+
+    protected void overWriteFieldToSpecifiedValue(WebElement field, String specifiedValue){
+        field.click();
+        field.sendKeys(Keys.CONTROL, "a");
+        field.sendKeys(Keys.DELETE);
+        field.sendKeys(specifiedValue);
+        field.sendKeys(Keys.TAB);
     }
 }
