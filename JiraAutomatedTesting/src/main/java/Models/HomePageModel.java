@@ -1,5 +1,6 @@
 package Models;
 
+import Models.BaseModel.BaseModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -24,7 +25,7 @@ public class HomePageModel extends BaseModel {
     @FindBy(id = "quickSearchInput")
     WebElement searchField;
 
-    @FindBy(xpath = "//a[contains(text(), \"has been successfully created\")]")
+    @FindBy(className = "issue-created-key")
     WebElement createIssueConfirmationLink;
 
 
@@ -49,7 +50,7 @@ public class HomePageModel extends BaseModel {
 
 
     public void waitForConfirmationLinkToBeClickable(){
-        createIssueConfirmationLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), \"has been successfully created\")]")));
+        createIssueConfirmationLink = waitUntilElementIsClickable("className", "issue-created-key");
     }
 
 

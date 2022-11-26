@@ -1,5 +1,6 @@
 package Models;
 
+import Models.BaseModel.BaseModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +12,7 @@ public class DeleteIssueWindowModel extends BaseModel {
     WebElement confirmDeleteButton;
 
     public void waitForConfirmDeleteButtonToBeClickable(){
-        confirmDeleteButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("delete-issue-submit")));
+        confirmDeleteButton = waitUntilElementIsClickable("id", "delete-issue-submit");
     }
 
 
