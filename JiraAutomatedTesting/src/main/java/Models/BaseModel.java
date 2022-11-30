@@ -14,8 +14,10 @@ import java.time.Duration;
 
 public abstract class BaseModel {
 
-    protected WebDriver webDriver;
-    protected WebDriverWait wait;
+
+
+    protected static WebDriver webDriver;
+    protected static WebDriverWait wait;
     protected String USERNAME = ConstantData.jiraUser;
     protected String PASSWORD = ConstantData.jiraPass;
 
@@ -51,7 +53,7 @@ public abstract class BaseModel {
 
 
 
-    protected void baseLogin(){
+    protected void baselogin(){
         waitForUsernameFieldToBeClickable();
         setUsername(USERNAME);
         setPassword(PASSWORD);
@@ -80,7 +82,7 @@ public abstract class BaseModel {
     }
 
 
-    private void waitForProfilePictureToBeClickable(){
+    protected void waitForProfilePictureToBeClickable(){
         profilePicture = wait.until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
     }
 }

@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class CreateIssueDescriptionFrameModel {
 
+
     WebDriver driver;
 
     @FindBy(id = "tinymce")
