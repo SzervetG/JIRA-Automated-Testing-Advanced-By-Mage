@@ -1,20 +1,18 @@
 package Models;
 
-import Utility.WebDriverManager;
-import org.openqa.selenium.By;
+import Models.BaseModel.BaseModel;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class IssuePageModel extends BaseModel {
-
-    WebDriverManager webDriverManager = new WebDriverManager();
+    DeleteIssueWindowModel deleteIssueWindow = new DeleteIssueWindowModel();
 
     @FindBy(id = "edit-issue")
     WebElement editIssueButton;
 
-    @FindBy(id = "description-val")
-    WebElement descriptionValue;
+    @FindBy(id = "summary-val")
+    WebElement summaryValue;
 
     @FindBy(id = "opsbar-operations_more")
     WebElement moreButton;
@@ -30,14 +28,28 @@ public class IssuePageModel extends BaseModel {
     WebElement issueNotFoundErrorMessage;
 
 
-    public void clickEditIssueButton() {
+    public void waitForMoreButtonToBeClickable(){
+        moreButton = waitUntilElementIsClickable("id", "opsbar-operations_more");
+    }
+
+
+    public void waitForDeleteButtonToBeClickable(){
+        deleteButton = waitUntilElementIsClickable("id", "delete-issue");
+    }
+
+
+    public void waitForEditButtonToBeClickable() {
+        editIssueButton = waitUntilElementIsClickable("id", "edit-issue");
+    }
+
+    public void clickEditIssueButton () {
         editIssueButton.click();
     }
 
 
     public void waitForMoreButtonToBeClickable() {
         moreButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
-    }
+
 
 
     public void clickMoreButton() {
@@ -50,10 +62,30 @@ public class IssuePageModel extends BaseModel {
     }
 
 
-    public String getDescriptionValue() {
-        return descriptionValue.getText();
+    public void clickEditIssueButton(){
+        editIssueButton.click();
     }
 
+
+    public String getSummaryValue(){
+        return summaryValue.getText();
+    }
+
+
+    public void deleteIssue(){
+
+        waitForMoreButtonToBeClickable();
+        clickMoreButton();
+        waitForDeleteButtonToBeClickable();
+        clickDeleteButton();
+        deleteIssueWindow.waitForConfirmDeleteButtonToBeClickable();
+        deleteIssueWindow.clickDeleteConfirmationButton();
+    }
+
+
+    public boolean isEditButtonThere(){
+        return editIssueButton.isDisplayed();
+    }
     public String getIssueKey() {
         return issueKey.getText();
     }

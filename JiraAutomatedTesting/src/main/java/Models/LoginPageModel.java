@@ -1,9 +1,12 @@
 package Models;
 
+import Models.BaseModel.BaseModel;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.time.Duration;
 
 public class LoginPageModel extends BaseModel {
 
@@ -26,6 +29,10 @@ public class LoginPageModel extends BaseModel {
     @FindBy(id = "log_out")
     WebElement logoutButton;
 
+    public void login(){
+            baseLogin();
+        }
+
 
     @FindBy(xpath = "//*[@id=\"main\"]/div/div/p[1]/strong")
     WebElement logoutMessage;
@@ -45,9 +52,6 @@ public class LoginPageModel extends BaseModel {
         passwordField.sendKeys(password);
     }
 
-    public void login() {
-        baselogin();
-    }
 
     public void tryToLoginWithCorrectCredentials() {
         baselogin();
@@ -56,16 +60,17 @@ public class LoginPageModel extends BaseModel {
     }
 
 
-    public void clickLoginButton() {
+    public void clickLoginButton(){
         loginButton.click();
     }
 
-    public void clickProfilePicture() {
+
+    public void clickProfilePicture(){
         profilePicture.click();
     }
 
 
-    public void clickProfileInfo() {
+    public void clickProfileInfo(){
         profileInfo.click();
     }
 
