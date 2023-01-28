@@ -76,13 +76,10 @@ public class CreateIssueWindowModel extends BaseModel {
     public void overwriteProjectField(String projectName){
         try {
             waitForProjectFieldToBeClickable();
-//            clickProjectField();
-//            projectField.sendKeys(projectName);
             overWriteFieldToSpecifiedValue(projectField, projectName);
         } catch (ElementNotInteractableException | NoSuchElementException e){
             waitForProjectFieldToBeClickable();
             overWriteFieldToSpecifiedValue(projectField, projectName);
-//            projectField.sendKeys(projectName);
         }
     }
 
@@ -90,12 +87,9 @@ public class CreateIssueWindowModel extends BaseModel {
     public void overwriteIssueTypeField(String issueType){
         try {
             waitForIssueTypeFieldToBeClickable();
-//            clickIssueTypeField();
-//            issueTypeField.sendKeys(issueType);
             overWriteFieldToSpecifiedValue(issueTypeField, issueType);
         } catch (ElementNotInteractableException e){
             waitForIssueTypeFieldToBeClickable();
-//            issueTypeField.sendKeys(issueType);
             overWriteFieldToSpecifiedValue(issueTypeField, issueType);
         }
     }
