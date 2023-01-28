@@ -1,8 +1,8 @@
 package TestSuites;
 
-import Models.EditIssueModel.EditIssueWindowModel;
-import Models.IssuePageModel;
-import Models.LoginPageModel;
+import Pages.EditIssueModel.EditIssueWindowModel;
+import Pages.IssuePage;
+import Pages.LoginPage;
 import Utility.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
-public class EditIssueTest {
+public class EditIssueTests {
 
-    LoginPageModel loginPage = new LoginPageModel();
+    LoginPage loginPage = new LoginPage();
     WebDriverManager webDriverManager = new WebDriverManager();
 
     EditIssueWindowModel editIssueWindow = new EditIssueWindowModel();
 
-    IssuePageModel issuePage = new IssuePageModel();
+    IssuePage issuePage = new IssuePage();
 
     @BeforeEach
     void loginToJira(){

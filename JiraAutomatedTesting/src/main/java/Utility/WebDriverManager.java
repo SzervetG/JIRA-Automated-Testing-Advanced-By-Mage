@@ -8,7 +8,7 @@ public class WebDriverManager {
 
     public static WebDriver webDriver = null;
 
-    private static String baseUrl = ConstantData.baseUrl;
+    private static String baseUrl = System.getProperty("baseUrl");
 
     public static void createWebDriver(){
         if(webDriver == null){

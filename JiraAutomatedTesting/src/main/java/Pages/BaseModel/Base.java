@@ -1,22 +1,20 @@
-package Models.BaseModel;
+package Pages.BaseModel;
 
-import Utility.ConstantData;
 import Utility.WebDriverManager;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public abstract class BaseModel {
+public abstract class Base {
 
     protected WebDriver webDriver;
     protected WebDriverWait wait;
 
 
-    public BaseModel(){
+    public Base(){
         WebDriverManager webDriverManager = new WebDriverManager();
         this.webDriver = webDriverManager.getWebDriver();
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(15));

@@ -1,10 +1,10 @@
-package Models;
+package Pages;
 
-import Models.BaseModel.BaseModel;
+import Pages.BaseModel.Base;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ProfilePageModel extends BaseModel {
+public class ProfilePage extends Base {
 
     @FindBy(id = "up-d-username")
     WebElement usernameData;

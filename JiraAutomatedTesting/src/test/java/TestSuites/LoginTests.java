@@ -1,4 +1,4 @@
 package TestSuites;
 
-public class LoginTest {
+public class LoginTests {
 }

@@ -1,13 +1,11 @@
-package Models;
+package Pages;
 
-import Models.BaseModel.BaseModel;
-import org.openqa.selenium.By;
+import Pages.BaseModel.Base;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class HomePageModel extends BaseModel {
+public class HomePagePage extends Base {
 
     @FindBy(id = "create_link")
     WebElement createIssueButton;

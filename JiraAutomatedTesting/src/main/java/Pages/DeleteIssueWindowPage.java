@@ -1,12 +1,10 @@
-package Models;
+package Pages;
 
-import Models.BaseModel.BaseModel;
-import org.openqa.selenium.By;
+import Pages.BaseModel.Base;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class DeleteIssueWindowModel extends BaseModel {
+public class DeleteIssueWindowPage extends Base {
 
     @FindBy(id = "delete-issue-submit")
     WebElement confirmDeleteButton;

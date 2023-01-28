@@ -1,7 +1,7 @@
-package Models.CreateIssueModel;
+package Pages.CreateIssuePage;
 
-import Models.BaseModel.BaseModel;
-import Models.HomePageModel;
+import Pages.BaseModel.Base;
+import Pages.HomePagePage;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,8 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-public class CreateIssueWindowModel extends BaseModel {
-    HomePageModel homePage = new HomePageModel();
+public class CreateIssueWindowPage extends Base {
+    HomePagePage homePage = new HomePagePage();
 
     @FindBy(id = "project-field")
     WebElement projectField;
@@ -31,7 +31,7 @@ public class CreateIssueWindowModel extends BaseModel {
     private String randomUuid;
 
 
-    public CreateIssueWindowModel(){
+    public CreateIssueWindowPage(){
         randomUuid = setRandomUuid();
     }
 

@@ -1,15 +1,15 @@
-package Models.EditIssueModel;
+package Pages.EditIssueModel;
 
-import Models.BaseModel.BaseModel;
-import Models.IssuePageModel;
+import Pages.BaseModel.Base;
+import Pages.IssuePage;
 import Utility.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
-public class EditIssueWindowModel extends BaseModel {
+public class EditIssueWindowModel extends Base {
 
     WebDriverManager webDriverManager = new WebDriverManager();
-    IssuePageModel issuePage = new IssuePageModel();
+    IssuePage issuePage = new IssuePage();
 
     @FindBy(id = "edit-issue-submit")
     WebElement confirmEditIssueButton;

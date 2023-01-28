@@ -1,14 +1,11 @@
-package Models;
+package Pages;
 
-import Models.BaseModel.BaseModel;
+import Pages.BaseModel.Base;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-public class LoginPageModel extends BaseModel {
+public class LoginPage extends Base {
 
     protected String USERNAME = System.getProperty("jiraUser");
     protected String PASSWORD = System.getProperty("jiraPass");

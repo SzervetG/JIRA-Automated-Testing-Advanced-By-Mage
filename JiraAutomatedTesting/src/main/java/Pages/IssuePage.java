@@ -1,11 +1,11 @@
-package Models;
+package Pages;
 
-import Models.BaseModel.BaseModel;
+import Pages.BaseModel.Base;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class IssuePageModel extends BaseModel {
-    DeleteIssueWindowModel deleteIssueWindow = new DeleteIssueWindowModel();
+public class IssuePage extends Base {
+    DeleteIssueWindowPage deleteIssueWindow = new DeleteIssueWindowPage();
 
     @FindBy(id = "edit-issue")
     WebElement editIssueButton;
