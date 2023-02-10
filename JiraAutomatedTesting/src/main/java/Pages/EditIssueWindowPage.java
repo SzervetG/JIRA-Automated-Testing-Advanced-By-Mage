@@ -1,12 +1,10 @@
-package Pages.EditIssueModel;
+package Pages;
 
-import Pages.BaseModel.Base;
-import Pages.IssuePage;
 import Utility.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
-public class EditIssueWindowModel extends Base {
+public class EditIssueWindowPage extends Base {
 
     WebDriverManager webDriverManager = new WebDriverManager();
     IssuePage issuePage = new IssuePage();

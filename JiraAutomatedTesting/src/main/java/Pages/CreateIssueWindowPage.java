@@ -1,7 +1,7 @@
-package Pages.CreateIssuePage;
+package Pages;
 
-import Pages.BaseModel.Base;
-import Pages.HomePagePage;
+import Pages.Base;
+import Pages.HomePage;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class CreateIssueWindowPage extends Base {
-    HomePagePage homePage = new HomePagePage();
+    HomePage homePage = new HomePage();
 
     @FindBy(id = "project-field")
     WebElement projectField;
@@ -98,13 +98,10 @@ public class CreateIssueWindowPage extends Base {
     public void setSummaryField(String summary){
         try {
             waitForSummaryFieldToBeClickable();
-//            clickSummaryField();
-//            summaryField.sendKeys(summary);
             overWriteFieldToSpecifiedValue(summaryField, summary);
         } catch (ElementNotInteractableException e){
             waitForSummaryFieldToBeClickable();
             overWriteFieldToSpecifiedValue(summaryField, summary);
-//            summaryField.sendKeys(summary);
         }
     }
 

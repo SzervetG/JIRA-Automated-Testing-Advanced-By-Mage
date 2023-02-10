@@ -3,6 +3,7 @@ package Pages;
 import Pages.BaseModel.Base;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class IssuePage extends Base {
     DeleteIssueWindowPage deleteIssueWindow = new DeleteIssueWindowPage();
@@ -19,6 +20,13 @@ public class IssuePage extends Base {
     @FindBy(id = "delete-issue")
     WebElement deleteButton;
 
+    @FindBy(className = "issue-link")
+    WebElement issueKey;
+
+
+    @FindBy(xpath = "//*[@id=\"issue-content\"]/div/div/h1")
+    WebElement issueNotFoundErrorMessage;
+
 
     public void waitForMoreButtonToBeClickable(){
         moreButton = waitUntilElementIsClickable("id", "opsbar-operations_more");
@@ -30,17 +38,26 @@ public class IssuePage extends Base {
     }
 
 
-    public void waitForEditButtonToBeClickable(){
+    public void waitForEditButtonToBeClickable() {
         editIssueButton = waitUntilElementIsClickable("id", "edit-issue");
     }
 
+    public void clickEditIssueButton () {
+        editIssueButton.click();
+    }
 
-    public void clickMoreButton(){
+
+    public void waitForMoreButtonToBeClickable() {
+        moreButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
+
+
+
+    public void clickMoreButton() {
         moreButton.click();
     }
 
 
-    public void clickDeleteButton(){
+    public void clickDeleteButton() {
         deleteButton.click();
     }
 
@@ -69,5 +86,26 @@ public class IssuePage extends Base {
     public boolean isEditButtonThere(){
         return editIssueButton.isDisplayed();
     }
+    public String getIssueKey() {
+        return issueKey.getText();
+    }
+
+    public void openExistingIssue(String projectUrl) {
+        webDriverManager.openWebPage(projectUrl);
+    }
+
+    public void openNonExistingIssue(String projectUrl) {
+        webDriverManager.openWebPage(projectUrl);
+    }
+
+
+    public void projectKeyIsVisible() {
+        issueKey.isDisplayed();
+    }
+
+    public String getIssueNotFoundErrorMessageText() {
+        return issueNotFoundErrorMessage.getText();
+    }
+
 
 }

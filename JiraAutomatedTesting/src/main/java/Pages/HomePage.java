@@ -10,7 +10,6 @@ public class HomePagePage extends Base {
     @FindBy(id = "create_link")
     WebElement createIssueButton;
 
-
     @FindBy(id = "header-details-user-fullname")
     WebElement profilePicture;
 

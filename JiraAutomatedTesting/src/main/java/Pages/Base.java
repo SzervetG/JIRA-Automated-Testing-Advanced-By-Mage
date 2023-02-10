@@ -1,4 +1,4 @@
-package Pages.BaseModel;
+package Pages;
 
 import Utility.WebDriverManager;
 import org.openqa.selenium.*;
