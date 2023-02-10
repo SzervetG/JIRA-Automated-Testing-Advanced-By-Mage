@@ -1,6 +1,6 @@
 package TestSuites;
 
-import Pages.EditIssueModel.EditIssueWindowModel;
+import Pages.EditIssueWindowPage;
 import Pages.IssuePage;
 import Pages.LoginPage;
 import Utility.WebDriverManager;
@@ -16,7 +16,7 @@ public class EditIssueTests {
     LoginPage loginPage = new LoginPage();
     WebDriverManager webDriverManager = new WebDriverManager();
 
-    EditIssueWindowModel editIssueWindow = new EditIssueWindowModel();
+    EditIssueWindowPage editIssueWindow = new EditIssueWindowPage();
 
     IssuePage issuePage = new IssuePage();
 

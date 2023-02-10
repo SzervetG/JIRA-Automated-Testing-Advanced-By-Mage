@@ -1,7 +1,5 @@
 package Pages;
 
-import Pages.Base;
-import Pages.HomePage;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -103,15 +101,6 @@ public class CreateIssueWindowPage extends Base {
             waitForSummaryFieldToBeClickable();
             overWriteFieldToSpecifiedValue(summaryField, summary);
         }
-    }
-
-    public void clickProjectField(){
-        projectField.click();
-    }
-
-
-    public void clickIssueTypeField(){
-        issueTypeField.click();
     }
 
 

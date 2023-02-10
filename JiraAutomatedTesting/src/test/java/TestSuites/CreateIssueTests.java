@@ -1,7 +1,7 @@
 package TestSuites;
 
 import Pages.*;
-import Pages.CreateIssuePage.CreateIssueWindowPage;
+import Pages.CreateIssueWindowPage;
 import Utility.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

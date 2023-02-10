@@ -19,9 +19,6 @@ public class EditIssueWindowPage extends Base {
     WebElement cancelButton;
 
 
-    @FindBy(xpath = "//iframe[contains(id, 'mce')]")
-    WebElement descriptionFrame;
-
     private String edited = " Edited";
 
 

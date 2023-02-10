@@ -1,11 +1,9 @@
 package Pages;
 
-import Pages.BaseModel.Base;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class HomePagePage extends Base {
+public class HomePage extends Base {
 
     @FindBy(id = "create_link")
     WebElement createIssueButton;
@@ -53,11 +51,5 @@ public class HomePagePage extends Base {
 
     public void clickConfirmationLink(){
         createIssueConfirmationLink.click();
-    }
-
-
-    public void searchIssue(String issueName){
-        searchField.sendKeys(issueName);
-        searchField.sendKeys(Keys.ENTER);
     }
 }

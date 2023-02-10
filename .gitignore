@@ -7,7 +7,7 @@
 *.log
 
 # Sensitive Data
-config.properties
+JiraAutomatedTesting/config.properties
 ConstantData.java
 .idea
 .idea/
