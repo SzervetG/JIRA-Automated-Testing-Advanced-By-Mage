@@ -6,8 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class WebDriverManager {
 
     public static WebDriver webDriver = null;
-
-    private static String baseUrl = System.getProperty("baseUrl");
+    private static String baseUrl = ReadConfig.read("baseUrl");
 
 
     public static void createWebDriver(){

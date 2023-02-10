@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class ReadConfig {
 
-    public static String Read(String data){
+    public static String read(String data){
         Properties properties = new Properties();
         try {
             FileInputStream fileInputStream = new FileInputStream("config.properties");
