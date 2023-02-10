@@ -1,14 +1,14 @@
 package Pages;
 
-import Pages.BaseModel.Base;
+import Utility.ReadConfig;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends Base {
 
-    protected String USERNAME = System.getProperty("jiraUser");
-    protected String PASSWORD = System.getProperty("jiraPass");
+    public String USERNAME = ReadConfig.read("jiraUser");
+    public String PASSWORD = ReadConfig.read("jiraPass");
 
     @FindBy(id = "login-form-username")
     protected WebElement usernameField;
@@ -21,6 +21,18 @@ public class LoginPage extends Base {
 
     @FindBy(id = "header-details-user-fullname")
     protected WebElement profilePicture;
+
+    @FindBy(id = "usernameerror")
+    WebElement loginErrorMessage;
+
+    @FindBy(id = "log_out")
+    WebElement logoutButton;
+
+    @FindBy(xpath = "//*[@id=\"main\"]/div/div/p[1]/strong")
+    WebElement logoutMessage;
+
+
+    public String logOutMessage = "You are now logged out. Any automatic login has also been stopped.";
 
 
     protected void setUsername(String username){
@@ -48,6 +60,16 @@ public class LoginPage extends Base {
     }
 
 
+    public void clickLogoutButton() {
+        logoutButton.click();
+    }
+
+
+    public void clickProfilePicture(){
+        profilePicture.click();
+    }
+
+
     protected void waitForUsernameFieldToBeClickable(){
         usernameField = waitUntilElementIsClickable("id", "login-form-username");
     }
@@ -58,11 +80,63 @@ public class LoginPage extends Base {
     }
 
 
+    public void waitForErrorMessageIsVisible() {
+        loginErrorMessage = waitUntilElementIsClickable("id", "usernameerror");
+    }
+
+
     public void login(){
         waitForUsernameFieldToBeClickable();
         setUsername(USERNAME);
         setPassword(PASSWORD);
         clickLoginButton();
         waitForProfilePictureToBeClickable();
+    }
+
+
+    public void loginWithParameters(String username, String password){
+        waitForUsernameFieldToBeClickable();
+        setUsername(username);
+        setPassword(password);
+        System.out.println(password);
+        clickLoginButton();
+    }
+
+
+    public void LoginWithCorrectCredentials() {
+        loginWithParameters(USERNAME, PASSWORD);
+        waitForProfilePictureToBeClickable();
+    }
+
+
+
+
+    public void LoginWithWrongPassword() {
+        loginWithParameters(USERNAME, "password");
+        waitForErrorMessageIsVisible();
+    }
+
+    public void LoginWithEmptyCredentials() {
+        loginWithParameters("", "");
+        waitForErrorMessageIsVisible();
+    }
+
+
+    public String getLoginErrorMessage() {
+        return loginErrorMessage.getText();
+    }
+
+
+
+
+    public String getLogoutMessageText() {
+        return logoutMessage.getText();
+    }
+
+
+    public void Logout() {
+        clickProfilePicture();
+        clickLogoutButton();
+
     }
 }
