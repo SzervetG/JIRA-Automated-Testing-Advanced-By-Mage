@@ -1,9 +1,7 @@
 package Pages;
 
-import Pages.BaseModel.Base;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class IssuePage extends Base {
     DeleteIssueWindowPage deleteIssueWindow = new DeleteIssueWindowPage();
@@ -24,8 +22,13 @@ public class IssuePage extends Base {
     WebElement issueKey;
 
 
-    @FindBy(xpath = "//*[@id=\"issue-content\"]/div/div/h1")
+    @FindBy(xpath = "//div[@class=\"issue-error\"]/h1")
     WebElement issueNotFoundErrorMessage;
+
+
+    public String existingIssueKey = "MTP-2363";
+
+    public String issueCanNotBeViewed = "You can't view this issue";
 
 
     public void waitForMoreButtonToBeClickable(){
@@ -42,14 +45,15 @@ public class IssuePage extends Base {
         editIssueButton = waitUntilElementIsClickable("id", "edit-issue");
     }
 
-    public void clickEditIssueButton () {
-        editIssueButton.click();
+
+    public void waitForProjectKeyToBeClickable() {
+        issueKey = waitUntilElementIsClickable("className", "issue-link");
     }
 
 
-    public void waitForMoreButtonToBeClickable() {
-        moreButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
-
+    public void waitForViewErrorMessageToBeClickable() {
+        issueNotFoundErrorMessage = waitUntilElementIsClickable("xpath", "//*[@id=\"issue-content\"]/div/div/h1");
+    }
 
 
     public void clickMoreButton() {
@@ -73,7 +77,6 @@ public class IssuePage extends Base {
 
 
     public void deleteIssue(){
-
         waitForMoreButtonToBeClickable();
         clickMoreButton();
         waitForDeleteButtonToBeClickable();
@@ -86,26 +89,16 @@ public class IssuePage extends Base {
     public boolean isEditButtonThere(){
         return editIssueButton.isDisplayed();
     }
+
+
     public String getIssueKey() {
         return issueKey.getText();
     }
 
-    public void openExistingIssue(String projectUrl) {
-        webDriverManager.openWebPage(projectUrl);
-    }
 
-    public void openNonExistingIssue(String projectUrl) {
-        webDriverManager.openWebPage(projectUrl);
-    }
-
-
-    public void projectKeyIsVisible() {
-        issueKey.isDisplayed();
-    }
 
     public String getIssueNotFoundErrorMessageText() {
         return issueNotFoundErrorMessage.getText();
     }
-
 
 }
